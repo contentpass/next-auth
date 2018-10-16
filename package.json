@@ -13,7 +13,6 @@
   "sideEffects": false,
   "dependencies": {
     "babel-core": "^6.26.3",
-    "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
