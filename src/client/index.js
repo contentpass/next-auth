@@ -1,6 +1,9 @@
 'use strict'
 
-import "babel-polyfill"
+if (!global._babelPolyfill) {
+  require("babel-polyfill")
+}
+
 import NextAuth from './next-auth-client'
 
 export {

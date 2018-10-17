@@ -13,9 +13,11 @@ export default {
   plugins: [
     babel({
       babelrc: false,
+      runtimeHelpers: true,
       exclude: [ 'node_modules/**' ],
-      presets: [['env', { modules: false }]]
+      presets: [['env', { modules: false }]],
+      plugins: ['external-helpers', 'transform-runtime'],
     })
   ],
-  
+
 }
