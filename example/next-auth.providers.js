@@ -103,6 +103,45 @@ module.exports = () => {
       }
     })
   }
-  
+
+  if (process.env.OPENID_ID && process.env.OPENID_SECRET && process.env.OPENID_CONFIGURATION_URL) {
+    const { Issuer, Strategy } = require('openid-client');
+
+    async function getOpenIdClient() {
+      return Issuer
+        .discover(KEYCLOAK_OID_CONFIGURATION_URL)
+        .then(issuer => new issuer.Client({
+          client_id: process.env.OPENID_ID,
+          client_secret: process.env.OPENID_SECRET,
+        }));
+    }
+
+    const params = {
+      redirect_uri: `${process.env.SERVER_URL}/login`,
+      scope: 'openid email profile',
+    };
+    const openIDClient = await getOpenIdClient();
+
+    providers.push({
+      providerName: 'OpenID',
+      providerOptions: {
+        scope: ['openid', 'profile', 'email'],
+      },
+      Strategy: Strategy,
+      strategyOptions: {
+        client: openIDClient,
+        params: params,
+      },
+      getProfile(profile) {
+        // Normalize profile into one with {id, name, email} keys
+        return {
+          id: profile.id,
+          name: profile.displayName,
+          email: profile.email,
+        }
+      }
+    })
+  }
+
   return providers
 }
