@@ -424,7 +424,8 @@
                       'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     body: encodedForm,
-                    credentials: 'same-origin'
+                    credentials: 'same-origin',
+                    mode: 'no-cors' // Needed for openid request to prevent cors on redirect response
                   }).then(function () {
                     return true;
                   }).catch(function () {
