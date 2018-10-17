@@ -1,16 +1,17 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('isomorphic-fetch'), require('babel-polyfill')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'isomorphic-fetch', 'babel-polyfill'], factory) :
-  (factory((global['next-auth-client'] = {}),null));
-}(this, (function (exports,fetch) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('babel-runtime/core-js/json/stringify'), require('babel-runtime/regenerator'), require('babel-runtime/core-js/promise'), require('babel-runtime/core-js/object/keys'), require('babel-runtime/helpers/asyncToGenerator'), require('babel-runtime/helpers/classCallCheck'), require('babel-runtime/helpers/createClass'), require('isomorphic-fetch')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'babel-runtime/core-js/json/stringify', 'babel-runtime/regenerator', 'babel-runtime/core-js/promise', 'babel-runtime/core-js/object/keys', 'babel-runtime/helpers/asyncToGenerator', 'babel-runtime/helpers/classCallCheck', 'babel-runtime/helpers/createClass', 'isomorphic-fetch'], factory) :
+  (factory((global['next-auth-client'] = {}),null,null,null,null,null,null,null,null));
+}(this, (function (exports,_JSON$stringify,_regeneratorRuntime,_Promise,_Object$keys,_asyncToGenerator,_classCallCheck,_createClass,fetch) { 'use strict';
 
+  _JSON$stringify = _JSON$stringify && _JSON$stringify.hasOwnProperty('default') ? _JSON$stringify['default'] : _JSON$stringify;
+  _regeneratorRuntime = _regeneratorRuntime && _regeneratorRuntime.hasOwnProperty('default') ? _regeneratorRuntime['default'] : _regeneratorRuntime;
+  _Promise = _Promise && _Promise.hasOwnProperty('default') ? _Promise['default'] : _Promise;
+  _Object$keys = _Object$keys && _Object$keys.hasOwnProperty('default') ? _Object$keys['default'] : _Object$keys;
+  _asyncToGenerator = _asyncToGenerator && _asyncToGenerator.hasOwnProperty('default') ? _asyncToGenerator['default'] : _asyncToGenerator;
+  _classCallCheck = _classCallCheck && _classCallCheck.hasOwnProperty('default') ? _classCallCheck['default'] : _classCallCheck;
+  _createClass = _createClass && _createClass.hasOwnProperty('default') ? _createClass['default'] : _createClass;
   fetch = fetch && fetch.hasOwnProperty('default') ? fetch['default'] : fetch;
-
-  var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-  function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   var _class = function () {
     function _class() {
@@ -31,7 +32,7 @@
        * malicious JavaScript.
        **/
       value: function () {
-        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee() {
           var _this = this;
 
           var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -41,7 +42,7 @@
               force = _ref2$force === undefined ? false : _ref2$force;
 
           var session;
-          return regeneratorRuntime.wrap(function _callee$(_context) {
+          return _regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
@@ -70,12 +71,12 @@
                   // If session data exists, has not expired AND force is not set then
                   // return the stored session we already have.
 
-                  if (!(session && Object.keys(session).length > 0 && session.expires && session.expires > Date.now())) {
+                  if (!(session && _Object$keys(session).length > 0 && session.expires && session.expires > Date.now())) {
                     _context.next = 6;
                     break;
                   }
 
-                  return _context.abrupt('return', new Promise(function (resolve) {
+                  return _context.abrupt('return', new _Promise(function (resolve) {
                     resolve(session);
                   }));
 
@@ -85,7 +86,7 @@
                     break;
                   }
 
-                  return _context.abrupt('return', new Promise(function (resolve) {
+                  return _context.abrupt('return', new _Promise(function (resolve) {
                     resolve({});
                   }));
 
@@ -96,7 +97,7 @@
                     if (response.ok) {
                       return response;
                     } else {
-                      return Promise.reject(Error('HTTP error when trying to get session'));
+                      return _Promise.reject(Error('HTTP error when trying to get session'));
                     }
                   }).then(function (response) {
                     return response.json();
@@ -138,8 +139,8 @@
     }, {
       key: 'csrfToken',
       value: function () {
-        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-          return regeneratorRuntime.wrap(function _callee2$(_context2) {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
+          return _regeneratorRuntime.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
@@ -149,7 +150,7 @@
                     if (response.ok) {
                       return response;
                     } else {
-                      return Promise.reject(Error('Unexpected response when trying to get CSRF token'));
+                      return _Promise.reject(Error('Unexpected response when trying to get CSRF token'));
                     }
                   }).then(function (response) {
                     return response.json();
@@ -181,12 +182,12 @@
     }, {
       key: 'linked',
       value: function () {
-        var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
+        var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3() {
           var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
               _ref5$req = _ref5.req,
               req = _ref5$req === undefined ? null : _ref5$req;
 
-          return regeneratorRuntime.wrap(function _callee3$(_context3) {
+          return _regeneratorRuntime.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
@@ -204,7 +205,7 @@
                     if (response.ok) {
                       return response;
                     } else {
-                      return Promise.reject(Error('Unexpected response when trying to get linked accounts'));
+                      return _Promise.reject(Error('Unexpected response when trying to get linked accounts'));
                     }
                   }).then(function (response) {
                     return response.json();
@@ -236,12 +237,12 @@
     }, {
       key: 'providers',
       value: function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+        var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4() {
           var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
               _ref7$req = _ref7.req,
               req = _ref7$req === undefined ? null : _ref7$req;
 
-          return regeneratorRuntime.wrap(function _callee4$(_context4) {
+          return _regeneratorRuntime.wrap(function _callee4$(_context4) {
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
@@ -302,11 +303,11 @@
     }, {
       key: 'signin',
       value: function () {
-        var _ref8 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(params) {
+        var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee6(params) {
           var _this2 = this;
 
           var formData, route, encodedForm;
-          return regeneratorRuntime.wrap(function _callee6$(_context6) {
+          return _regeneratorRuntime.wrap(function _callee6$(_context6) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
@@ -327,7 +328,7 @@
 
 
                   // Encoded form parser for sending data in the body
-                  encodedForm = Object.keys(formData).map(function (key) {
+                  encodedForm = _Object$keys(formData).map(function (key) {
                     return encodeURIComponent(key) + '=' + encodeURIComponent(formData[key]);
                   }).join('&');
                   return _context6.abrupt('return', fetch(route, {
@@ -339,8 +340,8 @@
                     body: encodedForm,
                     credentials: 'same-origin'
                   }).then(function () {
-                    var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5(response) {
-                      return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                    var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5(response) {
+                      return _regeneratorRuntime.wrap(function _callee5$(_context5) {
                         while (1) {
                           switch (_context5.prev = _context5.next) {
                             case 0:
@@ -371,9 +372,9 @@
                     };
                   }()).then(function (data) {
                     if (data.success && data.success === true) {
-                      return Promise.resolve(true);
+                      return _Promise.resolve(true);
                     } else {
-                      return Promise.resolve(false);
+                      return _Promise.resolve(false);
                     }
                   }));
 
@@ -394,9 +395,9 @@
     }, {
       key: 'signout',
       value: function () {
-        var _ref10 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee7() {
+        var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee7() {
           var csrfToken, formData, encodedForm;
-          return regeneratorRuntime.wrap(function _callee7$(_context7) {
+          return _regeneratorRuntime.wrap(function _callee7$(_context7) {
             while (1) {
               switch (_context7.prev = _context7.next) {
                 case 0:
@@ -409,7 +410,7 @@
 
                     // Encoded form parser for sending data in the body
                   };
-                  encodedForm = Object.keys(formData).map(function (key) {
+                  encodedForm = _Object$keys(formData).map(function (key) {
                     return encodeURIComponent(key) + '=' + encodeURIComponent(formData[key]);
                   }).join('&');
 
@@ -423,7 +424,8 @@
                       'Content-Type': 'application/x-www-form-urlencoded'
                     },
                     body: encodedForm,
-                    credentials: 'same-origin'
+                    credentials: 'same-origin',
+                    mode: 'no-cors' // Needed for openid request to prevent cors on redirect response
                   }).then(function () {
                     return true;
                   }).catch(function () {
@@ -462,7 +464,7 @@
       key: '_saveLocalStore',
       value: function _saveLocalStore(name, data) {
         try {
-          localStorage.setItem(name, JSON.stringify(data));
+          localStorage.setItem(name, _JSON$stringify(data));
           return true;
         } catch (err) {
           return false;
@@ -482,6 +484,10 @@
 
     return _class;
   }();
+
+  if (!global._babelPolyfill) {
+    require("babel-polyfill");
+  }
 
   exports.NextAuth = _class;
 
