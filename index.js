@@ -14,8 +14,6 @@ module.exports = (nextApp, {
   bodyParserUrlEncodedOptions = { extended: true },
   csrf = true,
   // URL base path for authentication routes (optional).
-  // Note: The prefix value of '/auth' is currently hard coded in 
-  // next-auth-client so you should not change this unless you also modify it.
   pathPrefix = '/auth',
   // Express Server (optional).
   expressApp = null,
