@@ -4,18 +4,19 @@ import fetch from 'isomorphic-fetch'
 
 export default class {
   /**
-   * This is an async, isometric method which returns a session object - 
+   * This is an async, isometric method which returns a session object -
    * either by looking up the current express session object when run on the
    * server, or by using fetch (and optionally caching the result in local
-   * storage) when run on the client.  
-   * 
+   * storage) when run on the client.
+   *
    * Note that actual session tokens are not stored in local storage, they are
    * kept in an HTTP Only cookie as protection against session hi-jacking by
    * malicious JavaScript.
    **/
   static async init({
     req = null,
-    force = false
+    force = false,
+    pathPrefix = '/auth'
   } = {}) {
     let session = {}
     if (req) {
@@ -56,7 +57,7 @@ export default class {
 
     // If we don't have session data, or it's expired, or force is set
     // to true then revalidate it by fetching it again from the server.
-    return fetch('/auth/session', {
+    return fetch(`${pathPrefix}/session`, {
       credentials: 'same-origin'
     })
     .then(response => {
@@ -86,8 +87,10 @@ export default class {
   /**
    * A simple static method to get the CSRF Token is provided for convenience
    **/
-  static async csrfToken() {
-    return fetch('/auth/csrf', {
+  static async csrfToken({
+    pathPrefix = '/auth'
+  } = {}) {
+    return fetch(`${pathPrefix}/csrf`, {
       credentials: 'same-origin'
     })
     .then(response => {
@@ -106,13 +109,14 @@ export default class {
    * A static method to get list of currently linked oAuth accounts
    **/
   static async linked({
-    req = null
+    req = null,
+    pathPrefix = '/auth'
   } = {}) {
     // If running server side, uses server side method
     if (req) return req.linked()
-    
+
     // If running client side, use RESTful endpoint
-    return fetch('/auth/linked', {
+    return fetch(`${pathPrefix}/linked`, {
       credentials: 'same-origin'
     })
     .then(response => {
@@ -126,18 +130,19 @@ export default class {
     .then(data => data)
     .catch(() => Error('Unable to get linked accounts'))
   }
-  
+
   /**
    * A static method to get list of currently configured oAuth providers
    **/
   static async providers({
-    req = null
+    req = null,
+    pathPrefix = '/auth'
   } = {}) {
     // If running server side, uses server side method
     if (req) return req.providers()
-    
+
     // If running client side, use RESTful endpoint
-    return fetch('/auth/providers', {
+    return fetch(`${pathPrefix}/providers`, {
       credentials: 'same-origin'
     })
     .then(response => {
@@ -160,7 +165,7 @@ export default class {
 
   /*
    * Sign in
-   * 
+   *
    * Will post a form to /auth/signin auth route if an object is passed.
    * If the details are valid a session will be created and you should redirect
    * to your callback page so the session is loaded in the client.
@@ -171,14 +176,25 @@ export default class {
    */
   static async signin(params) {
     // Params can be just string (an email address) or an object (form fields)
-    const formData = (typeof params === 'string') ? { email: params } : params
+    let formData = {};
+    let pathPrefix = '/auth';
+
+    if (typeof params === 'object') {
+      formData = Object.assign({}, params);
+      if (params.pathPrefix) {
+        pathPrefix = params.pathPrefix;
+        delete formData.pathPrefix;
+      }
+    } else {
+      formData.email = params;
+    }
 
     // Use either the email token generation route or the custom form auth route
-    const route = (typeof params === 'string') ? '/auth/email/signin' : '/auth/signin' 
+    const route = (typeof params === 'string') ? `${pathPrefix}/email/signin` : `${pathPrefix}/signin`
 
     // Add latest CSRF Token to request
-    formData._csrf = await this.csrfToken()
-    
+    formData._csrf = await this.csrfToken({ pathPrefix })
+
     // Encoded form parser for sending data in the body
     const encodedForm = Object.keys(formData).map((key) => {
       return encodeURIComponent(key) + '=' + encodeURIComponent(formData[key])
@@ -209,20 +225,22 @@ export default class {
     })
   }
 
-  static async signout() {
+  static async signout({
+    pathPrefix = '/auth'
+  } = {}) {
     // Signout from the server
-    const csrfToken = await this.csrfToken()
+    const csrfToken = await this.csrfToken({ pathPrefix })
     const formData = { _csrf: csrfToken }
 
     // Encoded form parser for sending data in the body
     const encodedForm = Object.keys(formData).map((key) => {
       return encodeURIComponent(key) + '=' + encodeURIComponent(formData[key])
     }).join('&')
-    
+
     // Remove cached session data
     this._removeLocalStore('session')
 
-    return fetch('/auth/signout', {
+    return fetch(`${pathPrefix}/signout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -247,7 +265,7 @@ export default class {
       return null
     }
   }
-  
+
   static _saveLocalStore(name, data) {
     try {
       localStorage.setItem(name, JSON.stringify(data))
@@ -256,7 +274,7 @@ export default class {
       return false
     }
   }
-  
+
   static _removeLocalStore(name) {
     try {
       localStorage.removeItem(name)

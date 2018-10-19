@@ -1,10 +1,12 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('babel-runtime/core-js/json/stringify'), require('babel-runtime/regenerator'), require('babel-runtime/core-js/promise'), require('babel-runtime/core-js/object/keys'), require('babel-runtime/helpers/asyncToGenerator'), require('babel-runtime/helpers/classCallCheck'), require('babel-runtime/helpers/createClass'), require('isomorphic-fetch')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'babel-runtime/core-js/json/stringify', 'babel-runtime/regenerator', 'babel-runtime/core-js/promise', 'babel-runtime/core-js/object/keys', 'babel-runtime/helpers/asyncToGenerator', 'babel-runtime/helpers/classCallCheck', 'babel-runtime/helpers/createClass', 'isomorphic-fetch'], factory) :
-  (factory((global['next-auth-client'] = {}),null,null,null,null,null,null,null,null));
-}(this, (function (exports,_JSON$stringify,_regeneratorRuntime,_Promise,_Object$keys,_asyncToGenerator,_classCallCheck,_createClass,fetch) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('babel-runtime/core-js/json/stringify'), require('babel-runtime/core-js/object/assign'), require('babel-runtime/helpers/typeof'), require('babel-runtime/regenerator'), require('babel-runtime/core-js/promise'), require('babel-runtime/core-js/object/keys'), require('babel-runtime/helpers/asyncToGenerator'), require('babel-runtime/helpers/classCallCheck'), require('babel-runtime/helpers/createClass'), require('isomorphic-fetch')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'babel-runtime/core-js/json/stringify', 'babel-runtime/core-js/object/assign', 'babel-runtime/helpers/typeof', 'babel-runtime/regenerator', 'babel-runtime/core-js/promise', 'babel-runtime/core-js/object/keys', 'babel-runtime/helpers/asyncToGenerator', 'babel-runtime/helpers/classCallCheck', 'babel-runtime/helpers/createClass', 'isomorphic-fetch'], factory) :
+  (factory((global['next-auth-client'] = {}),null,null,null,null,null,null,null,null,null,null));
+}(this, (function (exports,_JSON$stringify,_Object$assign,_typeof,_regeneratorRuntime,_Promise,_Object$keys,_asyncToGenerator,_classCallCheck,_createClass,fetch) { 'use strict';
 
   _JSON$stringify = _JSON$stringify && _JSON$stringify.hasOwnProperty('default') ? _JSON$stringify['default'] : _JSON$stringify;
+  _Object$assign = _Object$assign && _Object$assign.hasOwnProperty('default') ? _Object$assign['default'] : _Object$assign;
+  _typeof = _typeof && _typeof.hasOwnProperty('default') ? _typeof['default'] : _typeof;
   _regeneratorRuntime = _regeneratorRuntime && _regeneratorRuntime.hasOwnProperty('default') ? _regeneratorRuntime['default'] : _regeneratorRuntime;
   _Promise = _Promise && _Promise.hasOwnProperty('default') ? _Promise['default'] : _Promise;
   _Object$keys = _Object$keys && _Object$keys.hasOwnProperty('default') ? _Object$keys['default'] : _Object$keys;
@@ -22,11 +24,11 @@
       key: 'init',
 
       /**
-       * This is an async, isometric method which returns a session object - 
+       * This is an async, isometric method which returns a session object -
        * either by looking up the current express session object when run on the
        * server, or by using fetch (and optionally caching the result in local
-       * storage) when run on the client.  
-       * 
+       * storage) when run on the client.
+       *
        * Note that actual session tokens are not stored in local storage, they are
        * kept in an HTTP Only cookie as protection against session hi-jacking by
        * malicious JavaScript.
@@ -39,7 +41,9 @@
               _ref2$req = _ref2.req,
               req = _ref2$req === undefined ? null : _ref2$req,
               _ref2$force = _ref2.force,
-              force = _ref2$force === undefined ? false : _ref2$force;
+              force = _ref2$force === undefined ? false : _ref2$force,
+              _ref2$pathPrefix = _ref2.pathPrefix,
+              pathPrefix = _ref2$pathPrefix === undefined ? '/auth' : _ref2$pathPrefix;
 
           var session;
           return _regeneratorRuntime.wrap(function _callee$(_context) {
@@ -91,7 +95,7 @@
                   }));
 
                 case 8:
-                  return _context.abrupt('return', fetch('/auth/session', {
+                  return _context.abrupt('return', fetch(pathPrefix + '/session', {
                     credentials: 'same-origin'
                   }).then(function (response) {
                     if (response.ok) {
@@ -140,11 +144,15 @@
       key: 'csrfToken',
       value: function () {
         var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2() {
+          var _ref4 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+              _ref4$pathPrefix = _ref4.pathPrefix,
+              pathPrefix = _ref4$pathPrefix === undefined ? '/auth' : _ref4$pathPrefix;
+
           return _regeneratorRuntime.wrap(function _callee2$(_context2) {
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  return _context2.abrupt('return', fetch('/auth/csrf', {
+                  return _context2.abrupt('return', fetch(pathPrefix + '/csrf', {
                     credentials: 'same-origin'
                   }).then(function (response) {
                     if (response.ok) {
@@ -182,10 +190,12 @@
     }, {
       key: 'linked',
       value: function () {
-        var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3() {
-          var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-              _ref5$req = _ref5.req,
-              req = _ref5$req === undefined ? null : _ref5$req;
+        var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3() {
+          var _ref6 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+              _ref6$req = _ref6.req,
+              req = _ref6$req === undefined ? null : _ref6$req,
+              _ref6$pathPrefix = _ref6.pathPrefix,
+              pathPrefix = _ref6$pathPrefix === undefined ? '/auth' : _ref6$pathPrefix;
 
           return _regeneratorRuntime.wrap(function _callee3$(_context3) {
             while (1) {
@@ -199,7 +209,7 @@
                   return _context3.abrupt('return', req.linked());
 
                 case 2:
-                  return _context3.abrupt('return', fetch('/auth/linked', {
+                  return _context3.abrupt('return', fetch(pathPrefix + '/linked', {
                     credentials: 'same-origin'
                   }).then(function (response) {
                     if (response.ok) {
@@ -224,7 +234,7 @@
         }));
 
         function linked() {
-          return _ref4.apply(this, arguments);
+          return _ref5.apply(this, arguments);
         }
 
         return linked;
@@ -237,10 +247,12 @@
     }, {
       key: 'providers',
       value: function () {
-        var _ref6 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4() {
-          var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
-              _ref7$req = _ref7.req,
-              req = _ref7$req === undefined ? null : _ref7$req;
+        var _ref7 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4() {
+          var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+              _ref8$req = _ref8.req,
+              req = _ref8$req === undefined ? null : _ref8$req,
+              _ref8$pathPrefix = _ref8.pathPrefix,
+              pathPrefix = _ref8$pathPrefix === undefined ? '/auth' : _ref8$pathPrefix;
 
           return _regeneratorRuntime.wrap(function _callee4$(_context4) {
             while (1) {
@@ -254,7 +266,7 @@
                   return _context4.abrupt('return', req.providers());
 
                 case 2:
-                  return _context4.abrupt('return', fetch('/auth/providers', {
+                  return _context4.abrupt('return', fetch(pathPrefix + '/providers', {
                     credentials: 'same-origin'
                   }).then(function (response) {
                     if (response.ok) {
@@ -282,7 +294,7 @@
         }));
 
         function providers() {
-          return _ref6.apply(this, arguments);
+          return _ref7.apply(this, arguments);
         }
 
         return providers;
@@ -290,7 +302,7 @@
 
       /*
        * Sign in
-       * 
+       *
        * Will post a form to /auth/signin auth route if an object is passed.
        * If the details are valid a session will be created and you should redirect
        * to your callback page so the session is loaded in the client.
@@ -303,27 +315,38 @@
     }, {
       key: 'signin',
       value: function () {
-        var _ref8 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee6(params) {
+        var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee6(params) {
           var _this2 = this;
 
-          var formData, route, encodedForm;
+          var formData, pathPrefix, route, encodedForm;
           return _regeneratorRuntime.wrap(function _callee6$(_context6) {
             while (1) {
               switch (_context6.prev = _context6.next) {
                 case 0:
                   // Params can be just string (an email address) or an object (form fields)
-                  formData = typeof params === 'string' ? { email: params } : params;
+                  formData = {};
+                  pathPrefix = '/auth';
+
+
+                  if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
+                    formData = _Object$assign({}, params);
+                    if (params.pathPrefix) {
+                      pathPrefix = params.pathPrefix;
+                      delete formData.pathPrefix;
+                    }
+                  } else {
+                    formData.email = params;
+                  }
 
                   // Use either the email token generation route or the custom form auth route
-
-                  route = typeof params === 'string' ? '/auth/email/signin' : '/auth/signin';
+                  route = typeof params === 'string' ? pathPrefix + '/email/signin' : pathPrefix + '/signin';
 
                   // Add latest CSRF Token to request
 
-                  _context6.next = 4;
-                  return this.csrfToken();
+                  _context6.next = 6;
+                  return this.csrfToken({ pathPrefix: pathPrefix });
 
-                case 4:
+                case 6:
                   formData._csrf = _context6.sent;
 
 
@@ -340,7 +363,7 @@
                     body: encodedForm,
                     credentials: 'same-origin'
                   }).then(function () {
-                    var _ref9 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5(response) {
+                    var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5(response) {
                       return _regeneratorRuntime.wrap(function _callee5$(_context5) {
                         while (1) {
                           switch (_context5.prev = _context5.next) {
@@ -367,8 +390,8 @@
                       }, _callee5, _this2);
                     }));
 
-                    return function (_x5) {
-                      return _ref9.apply(this, arguments);
+                    return function (_x6) {
+                      return _ref10.apply(this, arguments);
                     };
                   }()).then(function (data) {
                     if (data.success && data.success === true) {
@@ -378,7 +401,7 @@
                     }
                   }));
 
-                case 7:
+                case 9:
                 case 'end':
                   return _context6.stop();
               }
@@ -386,8 +409,8 @@
           }, _callee6, this);
         }));
 
-        function signin(_x4) {
-          return _ref8.apply(this, arguments);
+        function signin(_x5) {
+          return _ref9.apply(this, arguments);
         }
 
         return signin;
@@ -395,14 +418,18 @@
     }, {
       key: 'signout',
       value: function () {
-        var _ref10 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee7() {
+        var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee7() {
+          var _ref12 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+              _ref12$pathPrefix = _ref12.pathPrefix,
+              pathPrefix = _ref12$pathPrefix === undefined ? '/auth' : _ref12$pathPrefix;
+
           var csrfToken, formData, encodedForm;
           return _regeneratorRuntime.wrap(function _callee7$(_context7) {
             while (1) {
               switch (_context7.prev = _context7.next) {
                 case 0:
                   _context7.next = 2;
-                  return this.csrfToken();
+                  return this.csrfToken({ pathPrefix: pathPrefix });
 
                 case 2:
                   csrfToken = _context7.sent;
@@ -418,7 +445,7 @@
 
                   this._removeLocalStore('session');
 
-                  return _context7.abrupt('return', fetch('/auth/signout', {
+                  return _context7.abrupt('return', fetch(pathPrefix + '/signout', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/x-www-form-urlencoded'
@@ -441,7 +468,7 @@
         }));
 
         function signout() {
-          return _ref10.apply(this, arguments);
+          return _ref11.apply(this, arguments);
         }
 
         return signout;
